@@ -133,7 +133,7 @@
 </template>
 
 <script>
-import CURD from '@/api/curd.js'
+import CURD from '@/libs/curd.js'
 export default {
   selections: [],
   row: null,

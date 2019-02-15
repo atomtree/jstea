@@ -1,8 +1,12 @@
-var path = require('path')
-var webpack = require('webpack')
+let path = require('path')
+let webpack = require('webpack')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+// const resolve = dir => {
+//     return path.join(__dirname, dir)
+// }
 
 module.exports = {
-    entry: './src/main.js',
+    entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/dist/',
@@ -19,7 +23,8 @@ module.exports = {
                     'vue-style-loader',
                     'css-loader'
                 ],
-            },      {
+            },
+            {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
@@ -44,6 +49,8 @@ module.exports = {
     },
     resolve: {
         alias: {
+            '@': path.resolve('src'),
+            '@config': path.resolve('config'),
             'vue$': 'vue/dist/vue.esm.js'
         },
         extensions: ['*', '.js', '.vue', '.json']
@@ -56,7 +63,10 @@ module.exports = {
     performance: {
         hints: false
     },
-    devtool: '#eval-source-map'
+    devtool: '#eval-source-map',
+    plugins: [
+        new VueLoaderPlugin()
+    ]
 }
 
 if (process.env.NODE_ENV === 'production') {
