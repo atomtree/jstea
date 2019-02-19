@@ -1,11 +1,12 @@
 /**
  * Created by smard on 2018/10/26.
  */
-import axios from '@/libs/api.request'
-import { getToken } from '@/libs/util'
+// import axios from '../libs/api.request'
+import { getToken } from '../libs/util'
+import HttpRequest from "./axios";
 
 class CURD {
-  constructor (baseUrl) {
+  constructor (baseUrl,serverUrl) {
     if (baseUrl instanceof String) {
       this.baseUrl = {
         GET: baseUrl,
@@ -15,8 +16,10 @@ class CURD {
         QUERY: undefined, // 这个是特殊定义的查询url
         baseQuery: undefined// 这个是查询对象
       }
+      this.axios = new HttpRequest(serverUrl)
     } else {
       this.baseUrl = baseUrl
+      this.axios = new HttpRequest(serverUrl)
     }
   }
 
@@ -36,7 +39,7 @@ class CURD {
   read (id) {
     return new Promise((resolve, reject) => {
       const token = this.loadToken()
-      axios.request({
+      this.axios.request({
         url: this.baseUrl.GET,
         headers: { Authorization: 'Bearer ' + token.token },
         params: { id: id },
@@ -63,7 +66,7 @@ class CURD {
       this.setReadParam(params)
       return new Promise((resolve, reject) => {
         const token = this.loadToken()
-        axios.request({
+        this.axios.request({
           url: this.baseUrl.GET,
           headers: { Authorization: 'Bearer ' + token.token },
           params: params,
@@ -114,7 +117,7 @@ class CURD {
     this.setQueryParam(newparam)
     return new Promise((resolve, reject) => {
       const token = this.loadToken()
-      axios.request({
+      this.axios.request({
         url: this.baseUrl.QUERY,
         headers: { Authorization: 'Bearer ' + token.token },
         data: newparam,
@@ -138,7 +141,7 @@ class CURD {
   doPost (obj) {
     return new Promise((resolve, reject) => {
       const token = this.loadToken()
-      axios.request({
+      this.axios.request({
         url: this.baseUrl.POST,
         headers: { Authorization: 'Bearer ' + token.token },
         data: obj,
@@ -162,7 +165,7 @@ class CURD {
   doPut (obj) {
     return new Promise((resolve, reject) => {
       const token = this.loadToken()
-      axios.request({
+      this.axios.request({
         url: this.baseUrl.PUT + '/' + obj.id,
         headers: { Authorization: 'Bearer ' + token.token },
         data: obj,
@@ -186,7 +189,7 @@ class CURD {
   doDelete (ids) {
     return new Promise((resolve, reject) => {
       const token = this.loadToken()
-      axios.request({
+      this.axios.request({
         url: this.baseUrl.DELETE,
         headers: { Authorization: 'Bearer ' + token.token },
         params: { id: ids },

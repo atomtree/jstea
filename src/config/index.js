@@ -1,4 +1,4 @@
-export default {
+let config = {
   /**
    * @description 配置显示在浏览器标签的title
    */
@@ -35,3 +35,15 @@ export default {
     }
   }
 }
+
+export function SetTitle(title){
+  config.title = title
+}
+
+export function SetBaseUrl(dev,pro){
+  config.baseUrl = {
+    dev:dev,
+    pro:pro
+  }
+}
+export default config

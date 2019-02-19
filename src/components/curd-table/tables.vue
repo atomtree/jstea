@@ -133,8 +133,11 @@
 </template>
 
 <script>
-import CURD from '@/libs/curd.js'
+import CURD from '../../libs/curd.js'
+import config from '../../config/index'
+import { Row, Col, Modal, ISwitch, Card, Divider, Spin, Page, Alert, Drawer,Icon } from 'iview'
 export default {
+  components: { Row, Col, Modal, ISwitch, Card, Divider, Spin, Page, Alert, Drawer,Icon },
   selections: [],
   row: null,
   curd: Object,
@@ -569,7 +572,8 @@ export default {
       this.toolConfig.advanceSearch = false
     }
 
-    this.curd = new CURD(this.RESTUrl)
+    console.log("config.baseurl", config.baseUrl)
+    this.curd = new CURD(this.RESTUrl,config.baseUrl.pro)
     this.isEditable = !this.readOnly
     this.queryParam.l = this.limit
     this.queryParam.s = this.sort
